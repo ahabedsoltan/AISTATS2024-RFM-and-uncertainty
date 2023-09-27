@@ -1,0 +1,128 @@
+\begin{tikzpicture}[baseline]
+
+\pgfplotstableread[col sep=comma]{./data/ood_covariate_metrics.csv}{\datatable};
+\begin{axis}[
+width=\columnwidth,
+height=.7\columnwidth,
+% ylabel={Interval_Len},
+% xlabel={},
+title={Interval Length},
+% ymax=2,
+legend style={font=\tiny, 
+	fill opacity=0.6, text opacity =1,
+        at={(0.02, 0.98)},anchor=north west,
+        row sep=-3pt,
+        },
+legend cell align={left},
+% ytick={0, 0.08}, % Define the desired y tick positions
+xtick={0, 1,2,3,4}, % Define the desired y tick positions
+xticklabels={ID, OOD-1, OOD-2, OOD-3, OOD-4},
+yticklabel style={
+	% /pgf/number format/fixed, % Use fixed point notation
+	% /pgf/number format/precision=2, % Set the number of decimal places
+	% /pgf/number format/fixed zerofill, % Fill in trailing zeros
+        },
+% ymode=log,
+]
+
+% GP-RBF
+\addplot+ [lightgreen, mark=*, 
+mark options={solid},
+thick,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=GP_RBF_Interval_Len_mean,y error=GP_RBF_Interval_Len_std] {\datatable};
+
+
+% GP-Laplace
+\addplot+ [darkgreen, mark=*, 
+mark options={solid},
+thick,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=GP_Laplace_Interval_Len_mean,y error=GP_Laplace_Interval_Len_std] {\datatable};
+
+
+% GP-ARD-RBF
+\addplot+ [lightblue, mark=*, 
+mark options={solid},
+thick,
+dotted,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=GP_ARD_RBF_Interval_Len_mean,y error=GP_ARD_RBF_Interval_Len_std] {\datatable};
+
+
+% GP-ARD-Laplace
+\addplot+ [darkblue, mark=*, 
+mark options={solid},
+thick,
+dotted,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=GP_ARD_Laplace_Interval_Len_mean,y error=GP_ARD_Laplace_Interval_Len_std] {\datatable};
+
+
+% RFM
+\addplot+ [black, mark=*, 
+mark options={solid},
+thick,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=GP_RFM_Laplace_Interval_Len_mean,y error=GP_RFM_Laplace_Interval_Len_std] {\datatable};
+
+
+% NG-Boost
+\addplot+ [orange, mark=*, 
+mark options={solid},
+thick,
+dashed,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=NG_Boost_Interval_Len_mean,y error=GP_RFM_Laplace_Interval_Len_std] {\datatable};
+
+
+% Cat-Boost-Ensemble
+\addplot+ [red, mark=*, 
+mark options={solid},
+thick,
+dashed,
+% error bars/.cd,
+% x dir=both,x explicit,
+% y dir=both,y explicit,
+% error bar style={solid}
+]
+table[x=test_level,y=Cat_Boost_Ensemble_Interval_Len_mean,y error=Cat_Boost_Ensemble_Interval_Len_std] {\datatable};
+
+
+
+% \legend{
+%     {GP-RBF},
+%     {GP-Laplace},
+%     {GP-ARD-RBF},
+%     {GP-ARD-Laplace},
+%     {GP-RFM-Laplace}, 
+%     {NGBoost},
+%     {CatBoost-Ensemble}
+% }
+
+\end{axis}
+\end{tikzpicture}

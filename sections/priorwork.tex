@@ -1,0 +1,73 @@
+\section{PRIOR WORK}
+
+
+% \begin{itemize}
+%     \item NG-boost
+%     \item cat-boost
+%     \item how can we categorize these different methods, and why people potentially want to prefer one to another
+%     \item GP, very general
+% \end{itemize}
+
+
+% \begin{enumerate}
+%     \item What is the problem
+%     \item Why is it challenging
+%     \item what have people done to tackle the problem
+%     \item connect to our work
+% \end{enumerate}
+
+
+Numerous uncertainty quantification methods have been proposed in the literature for utilization with tabular data. Here, we focus on discussing flexible methods with state-of-the-art predictive performance.
+
+\paragraph{Gaussian processes}
+As a non-parametric, flexible Bayesian regression model, the Gaussian Process (GP) is a well-studied, natural choice for uncertainty quantification \citep{rasmussen2006gaussian}. The GP is characterized by a kernel function as covariance. The crucial challenge is to choose the right kernel as it encodes high-level assumptions about the data. Commonly, the Radial Basis Function (RBF) or Laplace kernel is chosen which has a limited number of parameters to optimize. For more flexibility, the Automatic Relevance Determination (ARD) kernel introduces feature weighting through learnable parameters \citep{mackay1992bayesian,neal1996bayesian}. Instead of utilizing advanced kernels, we can equivalently transform the input and use standard kernels \citep{mackay1998introduction}. Neural networks have been studied as feature extractors \citep{calandra2016manifold,wilson2016deep}, or where the last layer approximates a GP \citep{huang2015scalable,liu2020simple}. Our approach combines both strategies, leveraging the recently proposed Recursive Feature Machine \citep{radhakrishnan2022feature}, which introduces a novel feature-extracting kernel.
+% \begin{itemize}
+%     \item GPs around for a long time
+%     \item why used for UQ: natural with covariance
+%     \item different GPs for expressive power
+%     \item ARD for feature learning
+%     \item neural network as feature extractor
+%     \item we use RFMs
+% \end{itemize}
+
+
+
+
+
+
+
+\paragraph{Probabilistic boosting}
+Boosting-based approaches \citep{freund1995desicion,friedman2001greedy} allow for flexible models, which find widespread application on tabular datasets \citep{shwartz2022tabular,grinsztajn2022tree,mcelfresh2023neural}. Such methods include AdaBoost, XGBoost, LightGBM or CatBoost \citep{chen2016xgboost,ke2017lightgbm,prokhorenkova2018catboost}. For classification problems, most methods have a natural probabilistic interpretation through estimated class probabilities. However, for regression problems, there is no such straightforward concept. Therefore, probabilistic extensions of boosting such as NGBoost, CatBoost-Ensembles \citep{duan2020ngboost,malinin2021uncertainty} or extensions to Random Forests \citep{schlosser2019distributional,shaker2020aleatoric} have been proposed. Notably, when comparing the performance of probabilistic boosting approaches against our GP-RFM, our approach outperforms them across a range of evaluation metrics and datasets.
+% \begin{itemize}
+%     \item boosting with good predictive performance on tabular data
+%     \item history of probabilistic boosting approaches
+%     \item Ours: surprisingly outperforms
+% \end{itemize}
+% 
+% XGBoost \citep{chen2016xgboost}
+% LightGBM \citep{ke2017lightgbm}
+% CatBoost \citep{prokhorenkova2018catboost}
+% AdaBoost \citep{freund1995desicion}
+% \citep{friedman2001greedy}
+%
+% Boosting arguably the best method for tabular data \citep{shwartz2022tabular,grinsztajn2022tree,mcelfresh2023neural}
+%
+% Uncertainty for boosting: NGBoost \citep{duan2020ngboost}, CatBoost-Ensembles \citep{malinin2021uncertainty}, Random Forest-based \citep{schlosser2019distributional,shaker2020aleatoric}
+
+
+
+
+
+
+
+
+
+
+\paragraph{Neural networks}
+The ability to learn features from data is a key advantage for the predictive power of neural networks (NN). For uncertainty quantification, Bayesian NNs \citep{mackay1992bayesian,neal1996bayesian} are a natural choice. However, the need for approximate inference methods such as variational inference \citep{graves2011practical,blundell2015weight} or Markov Chain Monte Carlo \citep{welling2011bayesian} makes them computationally expensive. Conversely, the use of Monte Carlo dropout \citep{gal2016dropout} provides less reliable uncertainty estimates \citep{ovadia2019can,gustafsson2020evaluating} than ensembles of NNs \citep{lakshminarayanan2017simple}. Although deep ensembles set the gold standard for NNs, they necessitate training multiple NNs. We leverage the idea of feature learning through the use of RFMs which are intricately linked to features learnt in feedforward NNs. Further, we show that we can combine NNs as feature extractors for our GP-RFM to perform on par with deep ensembles.
+% \begin{itemize}
+%     \item Feature learning leads to impressive results
+%     \item Bayesian NN
+%     \item Ensembles
+%     \item ours: Feature learning in RFMs connected to NNs
+% \end{itemize}

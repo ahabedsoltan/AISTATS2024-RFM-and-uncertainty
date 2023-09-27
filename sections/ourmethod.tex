@@ -1,0 +1,131 @@
+\section{BACKGROUND}
+
+Most machine learning algorithms focus on estimating the predictive model $f(\vx)=\E[y|\vx]$ from a training dataset $\gD=(\mX,\vy)=\{\vx_i\in\R^d,y_i\in\R\}_{i=1}^n$. However, in many applications, this is not sufficient. We are therefore interested in augmenting point estimates with reliable uncertainty quantification to obtain the predictive distribution $p(f(\vx_\ast)|\vx_\ast,\gD)$ for a new test data point $\vx_\ast$. In our approach, we leverage GPs in conjunction with feature learning kernels through RFMs.
+
+
+
+\subsection{Kernel machines}
+Kernel machines, \citep{scholkopf2002learning} are non-parametric predictive models. Given training data $\gD$  a kernel machine is a model of the form
+\begin{align}\label{eq:representer_thm}
+    f(\x) = \sum_{i=1}^n\alpha_i k(\x,\x_i).
+\end{align}
+Here, $k:\R^d\times \R^d\to\R$ is a positive semi-definite symmetric kernel function \citep{aronszajn1950theory}. According to the representer theorem \citep{kimeldorf1970correspondence}, the unique solution to the infinite-dimensional optimization problem
+\begin{align}\label{eq:kernel_regression}
+    &\arg\min{f\in\gH} \, \sum_{i=1}^n (f(\x_i)-y_i)^2+\lambda\norm{f}_\gH^2
+\end{align}
+has the form given in \cref{eq:representer_thm}. Here $\gH$ is the (unique) reproducing kernel Hilbert space (RKHS) corresponding to $k$. It can be seen that $\valpha = (\alpha_1,\ldots,\alpha_n)$ in \cref{eq:representer_thm} is the unique solution to the linear system,
+\begin{align}\label{eq:linear_system}
+    \left(k(\mX,\mX)+\lambda \mI_n \right)\valpha=\y.
+\end{align}
+
+
+
+
+
+\subsection{Gaussian processes}
+To extend kernel machines into a probabilistic framework, we can define a distribution over the predictive function which yields a GP $f \sim \gG\gP(m,k)$ specified by its mean function $m$ and its covariance function. Because of its properties, we utilize the kernel function $k$ as the covariance function in the GP. The posterior predictive distribution of the GP is then given by
+\begin{align}
+    p(f(\vx_\ast)|\vx_\ast,\gD) &= \gN \left( f(\vx_\ast) , \V[f(\vx_\ast)] \right),
+    \label{eq:gp-predictive-distribution}
+\end{align}
+with the mean as in \cref{eq:representer_thm} and the covariance $\V[f(\vx_\ast)]=k(\vx_\ast,\vx_\ast)-\vk_\ast^\top(\mK+\sigma^2\mI)^{-1}\vk_\ast$. We denote the kernel matrix as $\mK$ with $K_{i,j}=k(\vx_i,\vx_j)$, $\vk_\ast=k(\mX,\vx_\ast)$ and the measurement noise variance as $\sigma^2$.
+
+For the mean function, we choose $m=0$.
+The choice of kernel encodes high-level assumptions about the resulting function. We consider an exponential kernel of the form
+\begin{align}
+    k(\vx,\vz) = \exp\left( g(\vx, \vz) \right).
+\end{align}
+With $g(\vx,\vz)=-\frac{1}{2\ell^2}\|\vx-\vz\|^2$ we obtain the commonly chosen Radial Basis Function (RBF) kernel. With $g(\vx,\vz)=-\frac{1}{\ell}\|\vx-\vz\|$ we obtain the Laplace kernel.
+
+The parameters $\vtheta$ of the kernel include noise variance $\sigma$ and length scale $\ell$. We can select these parameters in a Bayesian framework using the Negative Log Likelihood (NLL) defined as $-\log p(\vy|\mX,\vtheta)$. Minimizing the NLL can be performed with any optimizer.
+
+
+
+
+
+
+
+
+\subsection{Recursive Feature Machines}
+
+A fundamental limitation of kernel machines is their reliance on kernel functions that are not adaptive to data. As a result, for certain tasks, kernel machines can significantly underperform compared to neural networks. Recently, RFMs were introduced. A type of kernel machine capable of learning features, making them data-adaptive.
+
+To develop kernel machines that can learn features, RFM integrates a positive semi-definite, symmetric matrix, $\mM$, as a learnable parameter into the kernel function. Specifically, this is suited for kernel functions that depend on the distance between points, such as $k(\vx, \vz) = \phi(\|\vx - \vz\|^2)$ where $ \phi: \R \to \R$ and $ \vx, \vz \in \R^d$. We incorporate the learnable matrix $\mM$ by using the Mahalanobis distance
+\begin{align}
+    \norm{\vx-\vz}_\mM := \sqrt{(\vx-\vz)^T\mM(\vx-\vz)}.
+\end{align}
+Therefore, the matrix $\mM$ re-weights the individual features and can incorporate correlation between features, which is the reason why we call it the \emph{feature matrix}.
+While any kernel function for $\phi$ can be used, we utilize the Laplace kernel based on the Mahalanobis distance
+\begin{align}
+    k_\mM(\vx,\vz) := \exp\left(-\frac{1}{\gamma}\norm{\vx-\vz}_\mM\right).
+\end{align}
+The prediction function corresponding to this kernel is given by
+\begin{align}
+    f_\mM(\vx) = k_\mM(\vx,\mX)\valpha
+    \label{eq:rfm-prediction-function}
+\end{align}
+with $\valpha = k_\mM(\mX,\mX)^{-1}\vy$. To learn the feature matrix $\mM$ we make use of the proposed idea of the Average Gradient Outer Product (AGOP) from \citet{radhakrishnan2022feature}: We start by initializing $\mM^{(0)}=\mI_d$. Then, at each iteration step $t$ we first solve for the kernel weights $\valpha$ from \cref{eq:rfm-prediction-function} with fixed $\mM$. Second, we update $\mM$ using the AGOP defined as
+\begin{align}
+    \mM^{(t+1)} = \frac{1}{n}\sum_{i=1}^n \nabla_{\vx}f_{\mM^{(t)}}(\vx_i)\nabla_{\vx}f_{\mM^{(t)}}(\vx_i)^T.
+    \label{eq:agop}
+\end{align}
+Intuitively, RFM prioritises the features that have the most impact on the prediction function. Thus, it learns the presentation most relevant to the underlying task.
+
+
+\paragraph{Remark:} Another way of feature weighting specifically in GPs is through the extension with Automatic Relevance Determination (ARD) \cite{neal1996bayesian} kernels. The RBF kernel is extended by using $g(\vx,\vz)=-\frac{1}{\ell^2}\norm{\vx-\vz}^2_\mM$ with $\mM^{-1}=\text{diag}([\ell_1^2,\dots,\ell_d^2])$ and similarly for the Laplace kernel. This effectively increases the parameter vector $\vtheta$ learnt by minimizing the NLL in the GP framework.
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OURS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{METHOD: GP-RFM}
+% Introduction to GPs and RFMs:
+While GPs are powerful non-parametric models which offer uncertainty quantification, they are limited by their reliance on kernel functions that are not adaptive to data. RFMs are a type of kernel machine capable of learning features, making them data-adaptive.
+% Integration of RFMs into GPs:
+We propose to integrate RFMs into GPs by replacing the kernel function $k(\vx,\vz)$ with the RFM kernel $k_\mM(\vx,\vz)$.
+Since we are using the Laplace kernel within the RFM, we denote the resulting GP as \emph{GP-RFM-Laplace}.
+
+% Mathematical Formulation:
+Specifically, we consider a combination of a scale kernel with the RFM kernel to obtain $\sigma_f^2 k_\mM(\vx,\vz)$.
+Since we are interested in the predictive distribution, we can set the mean function $m$ of the GP to zero. The resulting predictive distribution is then given by \cref{eq:gp-predictive-distribution} where $f(\vx)$ is given by \cref{eq:rfm-prediction-function}.
+% Parameterization:
+The parameters of the GP are the feature matrix $\mM$ and the kernel parameters $\vtheta$ consisting of noise variance $\sigma$, length scale $\ell$ as well as scale $\sigma_f$.
+
+% Training:
+\paragraph{Training}
+We disentangle the training of the GP-RFM-Laplace into two steps.
+First, we learn the feature matrix $\mM$ using the recursive iteration between solving for the kernel weights $\valpha$ for \cref{eq:rfm-prediction-function} and updating $\mM$ using the AGOP defined in \cref{eq:agop}.
+To learn the kernel weights, we solve the linear system in \cref{eq:linear_system} with a Ridge regularization term for stability to obtain $\valpha = (\mK+\lambda_\alpha\mI_n)^{-1}\vy$.
+For the AGOP we need to compute the gradient of the prediction function w.r.t. the inputs $\vx_i$. For the Laplace kernel, there exist closed-form solutions which we make use of \citep{radhakrishnan2022feature}.
+Second, we learn the kernel parameters $\vtheta$ by minimizing the NLL with fixed $\mM$.
+
+% Extension: add Ridge regularization to AGOP for M computation
+\paragraph{Eliminating spurious correlation}
+In many datasets, there exist spurious correlations between features. To avoid overfitting to this spurious correlation, we add a Ridge regularization term to the AGOP in \cref{eq:agop} to obtain
+\begin{align}
+    \mM^{(t+1)} = \frac{1}{n}\sum_{i=1}^n \nabla_{\vx}f_{\mM^{(t)}}(\vx_i)\nabla_{\vx}f_{\mM^{(t)}}(\vx_i)^T + \lambda_\mM\mI_d.
+    \label{eq:agop-ridge}
+\end{align}
+The Ridge regularization acts in this case as a noise filter by shrinking off-diagonal elements of $\mM$ towards zero.
+Therefore, the learnt feature correlation in the off-diagonal elements of $\mM$ is only kept if it is supported by the data, making the model more robust to random variations in the data.
+
+% Uncertainty Quantification:
+\paragraph{Uncertainty quantification}
+During inference, we can quantify the uncertainty of the GP-RFM-Laplace by computing the predictive variance $\V[f(\vx_\ast)]$ from \cref{eq:gp-predictive-distribution}.
+In traditional GPs, we have to choose the kernel function carefully to encode assumptions about the resulting function.
+In contrast, the GP-RFM-Laplace is able to learn the features from the data and therefore is more flexible in its assumptions about the resulting function.
+While \citet{radhakrishnan2022feature} showed the predictive power of RFMs, we show that the learnt features provide additional insight into the variability or ambiguity of the data which is crucial for uncertainty quantification.
+
+% Implementation Details:
+\paragraph{Implementation details}
+We implement the GP-RFM-Laplace in PyTorch \citep{paszke2019pytorch}. For the computation of the feature matrix in the first step of the training procedure, we rely on the official implementation by \citet{radhakrishnan2022feature}.
+For the GP implementation, we use GpyTorch \citep{gardner2018gpytorch} which provides a modular implementation of GPs in PyTorch. To optimize the GP parameters, we use the Adam optimizer \citep{kingma2014adam} with a cosine annealing learning rate scheduler \citep{loshchilov2016sgdr}.
+The hyperparameters we have to select are the learning rate, the Ridge regularization parameters $\lambda_\alpha$ and $\lambda_\mM$ for the solver and the AGOP respectively.
+Our code will be made publicly available upon acceptance.

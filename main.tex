@@ -1,0 +1,191 @@
+\documentclass[twoside]{article}
+
+\usepackage{aistats2024}
+
+\usepackage{aux/amirhesam_macros}
+% If your paper is accepted, change the options for the package
+% aistats2024 as follows:
+%
+%\usepackage[accepted]{aistats2024}
+%
+% This option will print headings for the title of your paper and
+% headings for the authors names, plus a copyright note at the end of
+% the first column of the first page.
+
+% If you set papersize explicitly, activate the following three lines:
+%\special{papersize = 8.5in, 11in}
+%\setlength{\pdfpageheight}{11in}
+%\setlength{\pdfpagewidth}{8.5in}
+
+% If you use natbib package, activate the following three lines:
+\usepackage[round]{natbib}
+\renewcommand{\bibname}{References}
+\renewcommand{\bibsection}{\subsubsection*{\bibname}}
+
+% If you use BibTeX in apalike style, activate the following line:
+%\bibliographystyle{apalike}
+
+% Optional math commands from https://github.com/goodfeli/dlbook_notation.
+\input{math_commands.tex}
+
+% packages
+\usepackage{xcolor, soul}
+\sethlcolor{pink}
+\usepackage{array}
+
+% tikz and pgfplots
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.14}
+\usepgfplotslibrary[fillbetween,statistics] 
+\usepgfplotslibrary{external}
+\tikzexternalize[prefix=figuresTikz/] % TODO TODO
+\usetikzlibrary{arrows.meta,calc,chains,shapes.geometric}
+
+
+\usepackage[pagebackref=true]{hyperref}
+\hypersetup{
+    colorlinks=true,
+    citecolor=blue,
+    linkcolor=red,
+    filecolor=magenta,
+    urlcolor=violet}
+\renewcommand*\backref[1]{\ifx#1\relax \else (Cited on p. #1) \fi}
+
+
+\usepackage{forloop}
+\usepackage{csvsimple}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{cleveref}
+\crefformat{equation}{(#2#1#3)}
+
+\newcounter{rowcount}
+\setcounter{rowcount}{0}
+
+
+
+
+% colors
+\definecolor{red}{RGB}{215,25,28}
+\definecolor{orange}{RGB}{253,174,97}
+\definecolor{yellow}{RGB}{255,255,191}
+\definecolor{lightblue}{RGB}{171,217,233}
+\definecolor{darkblue}{RGB}{44,123,182}
+\definecolor{lightgreen}{RGB}{178,223,138}
+\definecolor{darkgreen}{RGB}{51,160,44}
+
+
+
+\newcommand{\amir}[1]{{\color{purple}\textbf{[Amir:} \textit{#1}\textbf{]}}}
+\newcommand{\daniel}[1]{{\color{violet}\textbf{[Daniel:} \textit{#1}\textbf{]}}}
+\newcommand{\todo}[1]{{\color{red}\textbf{[TODO:} #1\textbf{]}}}
+
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\valpha}{\bm{\alpha}}
+
+
+
+
+
+
+
+\begin{document}
+
+
+
+
+
+\twocolumn[
+
+% \aistatstitle{\hl{Recursive Feature Learning in Gaussian Processes}}
+
+\aistatstitle{\hl{Uncertainty Estimation with Recursive Feature Machines}}
+
+\aistatsauthor{ Author 1 \And Author 2 \And  Author 3 }
+
+\aistatsaddress{ Institution 1 \And  Institution 2 \And Institution 3 } ]
+
+
+
+
+
+
+
+\begin{abstract}
+In conventional regression analyses, predictions are typically represented as point estimates derived from covariates. Gaussian Processes (GP) offer a framework that predicts and in addition, quantifies associated uncertainties. This is particularly crucial in areas like healthcare and weather forecasting, where there is a growing recognition of the importance of capturing uncertainty. However, kernel-based methods are typically outperformed by ensemble decision tree methods on tabular/categorical data sets in downstream regression tasks. In this study, we harness the power of the recently proposed Recursive Feature Machines (RFMs) to enhance feature extraction through kernel methods. We subsequently employ this learned kernel for in-depth uncertainty analysis. Remarkably, when tested on tabular datasets, our RFM-based method consistently surpasses other leading uncertainty estimation techniques, including NGBoost and CatBoost-ensemble. We also demonstrate how our method can be integrated with deep networks and how it performs comparably to deep ensembles.
+% In conventional regression analyses, predictions are typically represented as point estimates derived from covariates. However, there is a growing recognition of the importance of capturing uncertainty in predictions, especially in critical domains like healthcare and weather forecasting. Probabilistic regression models, such as Gaussian Processes (GPs), have risen to this challenge by offering a comprehensive probability distribution over the outcome space, contingent on these covariates. GPs Bayesian nature provides a natural avenue for uncertainty quantification.
+% In the midst of this evolving landscape, tree ensemble models like XG-boost emerged as state-of-the-art for tabular data. Yet, their major drawback was their inability to encapsulate uncertainty. This gap led to the development of methods like NG-boost and cat-boost, which prioritized uncertainty quantification. The most recent addition to this domain is the Recursive Feature Machine (RFM) kernel-based model, renowned for its exceptional feature learning capabilities. Specifically, for tabular datasets, it has demonstrated superior performance over fully connected networks and has either matched or surpassed the capabilities of XG-boost.
+% In this study, we leverage the capabilities of RFMs to enhance feature extraction through kernel methods and subsequently employ this learned kernel for rigorous uncertainty analysis. Our empirical results on tabular datasets, reveal that the RFM-based approach consistently outshines other leading uncertainty estimation techniques, including NG-boost and cat-boost. Additionally, we conduct experiments to demonstrate how our method can seamlessly integrate with deep networks and perform comparably to deep ensemble methods, suggesting a promising direction for future research and applications.
+\end{abstract}
+
+
+
+
+
+
+
+
+\input{sections/introduction}
+\input{sections/priorwork}
+% \input{sections/summary_contribution}
+\input{sections/ourmethod}
+\input{sections/experiments}
+\input{sections/disscussion}
+
+
+\clearpage
+\hrule\hrule
+\hl{\textbf{Submissions are limited to 8 pages excluding references using the LaTeX style file we provide below (the page limit will be 9 for camera-ready submissions}).}
+\hrule\hrule
+
+
+
+\subsubsection*{Acknowledgements}
+\hl{
+All acknowledgments go at the end of the paper, including thanks to reviewers who gave useful comments, to colleagues who contributed to the ideas, and to funding agencies and corporate sponsors that provided financial support. 
+To preserve the anonymity, please include acknowledgments \emph{only} in the camera-ready papers.
+}\\
+This work was partially supported by the Wallenberg AI, Autonomous Systems and Software Program (WASP) funded by the Knut and Alice Wallenberg Foundation. % DG
+The computations were enabled by the Berzelius resource provided by the Knut and Alice Wallenberg Foundation at the National Supercomputer Centre, Sweden. % DG
+
+
+
+
+
+% references
+\bibliographystyle{apalike}
+\bibliography{references}
+
+
+
+
+
+\clearpage
+\input{sections/checklist}
+
+
+
+
+
+
+
+\clearpage
+\appendix
+\onecolumn
+\daniel{we have to remove this later as AISTATS wants the supplementary to be a separate document}
+\hrule
+\begin{center}
+    \textbf{\Large{Supplementary Materials}}
+\end{center}
+\hrule
+\input{sections/appendix}
+
+
+
+
+
+
+\end{document}

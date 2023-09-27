@@ -1,0 +1,27 @@
+\section{INTRODUCTION}
+
+Regression analyses have long been the bedrock of predictive modelling, where the primary goal is to forecast future outcomes based on historical data. In its conventional form, these predictions are often distilled down to singular, definitive values, which are derived from a set of influencing factors or covariates. However, as the applications of predictive modelling have grown more diverse and complex, especially in critical sectors like healthcare and weather forecasting, there is an increasing realization that a mere point prediction is not sufficient. Stakeholders in these sectors often need to gauge the level of confidence or uncertainty associated with these predictions.
+
+In the rapidly changing realm of machine learning, the recent emergence of Recursive Feature Machines (RFMs) has captured the attention of both researchers and practitioners. RFMs, being kernel-based methods, offer a fresh perspective on extracting and interpreting features from data. Our study delves deeply into the capabilities of RFMs, from their effectiveness in refining predictions to their aptitude in uncertainty estimations. We also evaluate how they compare against other leading techniques, especially the newer decision tree-based methods like NGBoost and CatBoost. 
+
+
+Meanwhile, Gaussian Processes (GP) have long been the preferred method for assessing uncertainty in predictions, offering a nuanced approach that goes beyond simple point estimates. Yet, with the continuous advancements in machine learning, decision tree-based techniques like NGBoost and CatBoost are making their mark. These methods not only rival GP in prediction accuracy but have also demonstrated superior performance on specific uncertainty metrics such as NLL, coverage, and RMSE, particularly for tabular or categorical data. Emphasizing the importance of ongoing assessment and evolution in the domain, our research also delves into the intrinsic relationship between RFM and traditional GP.
+
+Additionally, we demonstrate how RFM can be integrated with the learned embeddings from Neural Networks, delivering uncertainty estimations comparable to those of NN ensembles. This presents a cost-effective alternative, circumventing the need to train multiple Neural Network models.
+
+% But the world of machine learning is ever-evolving, and the recent introduction of Recursive Feature Machines (RFMs) has stirred interest among researchers and practitioners. RFMs promise to enhance the way we extract and interpret features from data, especially when using kernel methods, which are techniques used to find patterns in data. In this research, we embark on a deep dive into the capabilities and potential of RFMs. Our exploration spans their efficacy in refining predictions, their prowess in uncertainty estimations, and how they stack up against other leading techniques in the field. Furthermore, in an era where deep learning networks are revolutionizing various domains, we also investigate how RFMs can be seamlessly integrated with these advanced architectures. By doing so, we aim to paint a holistic picture of RFMs, shedding light on their potential to reshape the future of predictive modelling and uncertainty estimation.
+
+
+
+
+
+\subsection{Main contribution}
+In this work, we have the following contributions,
+
+\begin{itemize}
+    \item We demonstrate that features learned using the RFM method significantly enhance the uncertainty performance on tabular datasets. Given their ability to produce results that are either comparable to or, in certain instances, surpass state-of-the-art (SOTA) methods, RFM positions itself as the new benchmark for applications that demand precise uncertainty estimation.
+    \item We establish that RFM-based methods can be synergized with features derived from neural networks, achieving results that stand shoulder to shoulder with deep ensemble methods. This presents RFM as a viable alternative, especially in scenarios where the computational burden of training multiple deep networks is a concern.
+    \item We draw a link between traditional GP techniques and RFM, examining their similarities and differences in comparison.
+\end{itemize}
+\hl{check if we need this as a subsection.}
+

@@ -1,0 +1,71 @@
+% and store the number of columns in `\NoOfCols'
+% (minus 1 because counting in `\foreach' starts with zero
+% \pgfplotstablegetcolsof{\loadedtable}
+% \pgfmathtruncatemacro{\NoOfCols}{\pgfplotsretval-1}
+% \NoOfCols
+
+\begin{tikzpicture}[baseline]
+    \pgfplotstableread[col sep=comma]{./data/ood_label_metrics.csv}{\loadedtable};
+    
+    \begin{axis}[
+        % adjust the `width' a bit by keeping the default `height'
+        width=\columnwidth,
+        height=0.7\columnwidth,
+        title={NLL on label shift},
+        % ymin=1e-1,
+        ymax=9,
+        % there should be no gap between the bars in one group
+        ybar=0pt,
+        % adjust the size of the bars so they don't overlap
+        bar width=0.85/5, % divided by number of columns
+        % enlarge the x limits so all of the bars are shown
+        enlarge x limits={abs=0.6},
+        xtick={0, 1, 2, 3, 4}, % Define the desired y tick positions
+        xticklabels={ID, OOD-1, OOD-2, OOD-3, OOD-4},
+        legend style={font=\tiny, 
+	fill opacity=0.6, text opacity =1,
+        at={(0.02, 0.98)},anchor=north west,
+        row sep=-3pt,
+        },
+        legend cell align={left},
+    ]
+
+        % GP-ARD-Laplace
+        \addplot[fill=darkblue] table [
+            x expr=\coordindex,
+            y index=16, % zero based
+            col sep=comma,
+        ] {\loadedtable};
+
+        % GP-RFM-Laplace
+        \addplot[fill=black] table [
+            x expr=\coordindex,
+            y index=21,
+            col sep=comma,
+        ] {\loadedtable};
+
+        % NGBoost
+        \addplot[fill=orange] table [
+            x expr=\coordindex,
+            y index=26,
+            col sep=comma,
+        ] {\loadedtable};
+
+        % CatBoost-Ensemble
+        \addplot[fill=red] table [
+            x expr=\coordindex,
+            y index=31,
+            col sep=comma,
+        ] {\loadedtable};
+
+        \legend{
+            % {GP-RBF},
+            % {GP-Laplace},
+            % {GP-ARD-RBF},
+            {GP-ARD-Laplace},
+            {GP-RFM-Laplace}, 
+            {NGBoost},
+            {CatBoost-Ensemble}
+        }
+    \end{axis}
+\end{tikzpicture}

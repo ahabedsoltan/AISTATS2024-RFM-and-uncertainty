@@ -1,0 +1,738 @@
+\RequirePackage{import}
+\RequirePackage{xcolor,bm,setspace}
+\RequirePackage{mathrsfs, amsmath, amsfonts, mathtools, amssymb}
+\RequirePackage{amsthm}
+\RequirePackage{tocloft}
+\RequirePackage{centernot}
+\RequirePackage{microtype, nicefrac, bm, bbm}
+\RequirePackage{enumitem}
+\RequirePackage{etoolbox}
+% \RequirePackage[toc,page]{appendix}
+\RequirePackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{decorations.pathreplacing,calc,shapes.misc,shapes.callouts,shapes.arrows,positioning}
+\usetikzlibrary{patterns}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{url}
+\RequirePackage{ifthen}
+\RequirePackage{cite}
+\RequirePackage{scalerel}
+\RequirePackage{imakeidx}       % hyperlinks in contents page
+\RequirePackage[hidelinks,colorlinks,linkcolor=black,citecolor=orange]{hyperref}       % hyperlinks
+\RequirePackage{booktabs}       % professional-quality tables
+\RequirePackage{nicefrac}       % compact symbols for 1/2, etc.
+\RequirePackage{microtype}      % microtypography
+%\RequirePackage[noadjust]{cite}
+\RequirePackage{epsfig, psfrag}
+\RequirePackage{bbm}
+\RequirePackage{xcolor}
+\RequirePackage{url}
+\RequirePackage{xspace}
+\RequirePackage{mathtools}
+\RequirePackage{epstopdf}
+\RequirePackage{sidecap}
+\RequirePackage{graphicx}
+\graphicspath{{figures/}}
+\RequirePackage[normalem]{ulem} % provides strikeout command \sout
+\RequirePackage{framed} % Boxed equations
+
+
+
+% Brackets
+\newcommand{\vbrac}[1]{\left|#1\right|}
+\newcommand{\rbrac}[1]{\left(#1\right)}
+\newcommand{\sbrac}[1]{\left[#1\right]}
+\newcommand{\cbrac}[1]{\left\{#1\right\}}
+\providecommand{\abs}[1]{\left|#1\right|}
+\newcommand{\round}[1]{\left(#1\right)}
+\newcommand{\curly}[1]{\left\{#1\right\}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
+\providecommand{\mest}{\text{\sf m-est}}
+
+\newcommand{\grad}{\nabla}
+\newcommand{\hess}{\nabla^2}
+
+\newcommand{\half}{\tfrac{1}{2}}
+\newcommand{\Half}{\frac{1}{2}}
+\providecommand{\inv}{^{-1}}
+\providecommand{\pinv}{^{\dagger}}
+\providecommand{\inner}[1]{\left<#1\right>}
+\providecommand{\outer}{\otimes}
+\providecommand{\PL}[1]{\overset{#1}{\implies}}
+\providecommand{\pp}[1]{\textcolor{magenta}{PP: #1}}
+\providecommand*{\red}[1]{\textcolor{red}{#1}}
+\providecommand{\blue}[1]{\textcolor{blue}{#1}}
+\providecommand{\green}[1]{\textcolor{green}{#1}}
+\providecommand{\gray}[1]{\textcolor{black!50}{#1}}
+
+\providecommand{\mmse}{\mathsf{mmse}}
+\providecommand{\lmmse}{\mathsf{lmmse}}
+\providecommand{\map}{\mathsf{map}}
+\providecommand{\Cov}{\text{Cov}}
+\providecommand{\Var}{{\mathbb{V}}}
+\providecommand{\normal}{\mathcal{N}}
+\providecommand{\mc}{\mathcal}
+\providecommand{\ie}{\rm i.e.}
+\providecommand{\T}{^\top}
+\providecommand{\her}{^\mathsf{H}}
+\providecommand{\wb}{\overline}
+\providecommand{\wt}{\widetilde}
+\providecommand{\wh}{\widehat}
+\providecommand{\Eta}{H}
+\providecommand{\Etabf}{\bm{H}}
+\providecommand{\Taubf}{\bm{T}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+
+
+\providecommand{\Real}{\mathbb{R}}
+\providecommand{\Complex}{\mathbb{C}}
+\providecommand{\Integer}{\mathbb{Z}}
+\providecommand{\Natural}{\mathbb{N}}
+\providecommand{\Rational}{\mathbb{Q}}
+\providecommand{\Banach}{\mathcal{B}}
+\providecommand{\Hilbert}{\mathcal{H}}
+
+\providecommand{\lm}{{\ell\!-\!1}}
+\providecommand{\Lm}{{L\!-\!1}}
+\providecommand{\lp}{{\ell\!+\!1}}
+\providecommand{\Lp}{{L\!+\!1}}
+\providecommand{\km}{{k\!-\!1}}
+\providecommand{\Km}{{K\!-\!1}}
+\providecommand{\kp}{{k\!+\!1}}
+\providecommand{\Kp}{{K\!+\!1}}
+
+\providecommand\alphavec{\bm{\alpha}}
+\providecommand\betavec{\bm{\beta}}
+\providecommand\gammavec{\bm{\gamma}}
+\providecommand\deltavec{\bm{\delta}}
+\providecommand\etavec{\bm{\eta}}
+\providecommand\thetavec{\bm{\theta}}
+\providecommand\phivec{\bm{\phi}}
+\providecommand\psivec{\bm{\psi}}
+\providecommand\zetavec{\bm{\zeta}}
+\providecommand\chivec{\bm{\chi}}
+\providecommand{\xivec}{\bm{\xi}}
+
+\renewcommand{\a}{\bm{a}}
+\providecommand{\bmc}{\bm{c}} % This is a special accented character like Ca\c{c}mak (pronounced Chuk Muck)
+\providecommand{\dx}{{\rm dx}}
+\providecommand{\du}{{\rm du}}
+\providecommand{\dt}{{\rm dt}}
+\providecommand{\ds}{{\rm ds}}
+\providecommand{\e}{\bm{e}}
+\providecommand{\f}{\bm{f}}
+\providecommand{\g}{\bm{g}}
+\providecommand{\h}{\bm{h}}
+% \providecommand{\i}{\bm{i}}
+\providecommand{\j}{\bm{j}}
+\providecommand{\k}{\bm{k}}
+\providecommand{\l}{\bm{l}}
+\providecommand{\m}{\bm{m}}
+\providecommand{\n}{\bm{n}}
+\providecommand{\o}{\bm{o}}
+\providecommand{\p}{\bm{p}}
+\providecommand{\q}{\bm{q}}
+\providecommand{\rbm}{\bm{r}}
+\providecommand{\s}{\bm{s}}
+\providecommand{\v}{\bm{v}}
+\providecommand{\w}{\bm{w}}
+\newcommand{\x}{\bm{x}}
+\providecommand{\y}{\bm{y}}
+\providecommand{\z}{\mathbf{z}}
+
+\providecommand{\A}{\bm{A}}
+\providecommand{\I}{\bm{I}}
+\providecommand{\S}{\bm{S}}
+\providecommand{\U}{\bm{U}}
+\providecommand{\W}{\bm{W}}
+\providecommand{\X}{\bm{X}}
+\providecommand{\Y}{\bm{Y}}
+\providecommand{\Z}{\bm{Z}}
+
+\providecommand{\Loss}{\mathcal{L}}
+
+%% Boldfaced lowercase and UPPERCASE
+\providecommand{\abf}{\mathbf{a}}
+\providecommand{\bbf}{\mathbf{b}}
+\providecommand{\cbf}{\mathbf{c}}
+\providecommand{\dbf}{\mathbf{d}}
+\providecommand{\ebf}{\mathbf{e}}
+\providecommand{\fbf}{\mathbf{f}}
+\newcommand{\gbf}{\mathbf{g}}
+\providecommand{\hbf}{\mathbf{h}}
+\providecommand{\ibf}{\mathbf{i}}
+\providecommand{\jbf}{\mathbf{j}}
+\providecommand{\kbf}{\mathbf{k}}
+\providecommand{\lbf}{\mathbf{l}}
+%\providecommand{\mbf}{\mathbf{m}}
+\providecommand{\nbf}{\mathbf{n}}
+\providecommand{\obf}{\mathbf{o}}
+\providecommand{\pbf}{\mathbf{p}}
+\providecommand{\qbf}{\mathbf{q}}
+\providecommand{\rbf}{\mathbf{r}}
+\providecommand{\sbf}{\mathbf{s}}
+\providecommand{\tbf}{\mathbf{t}}
+\providecommand{\ubf}{\mathbf{u}}
+\providecommand{\vbf}{\mathbf{v}}
+\providecommand{\wbf}{\mathbf{w}}
+\providecommand{\xbf}{\mathbf{x}}
+\providecommand{\ybf}{\mathbf{y}}
+\providecommand{\zbf}{\mathbf{z}}
+\providecommand{\Abf}{\mathbf{A}}
+\providecommand{\Bbf}{\mathbf{B}}
+\providecommand{\Cbf}{\mathbf{C}}
+\providecommand{\Dbf}{\mathbf{D}}
+\providecommand{\Ebf}{\mathbf{E}}
+\providecommand{\Fbf}{\mathbf{F}}
+\providecommand{\Gbf}{\mathbf{G}}
+\providecommand{\Hbf}{\mathbf{H}}
+\providecommand{\Ibf}{\mathbf{I}}
+\providecommand{\Jbf}{\mathbf{J}}
+\providecommand{\Kbf}{\mathbf{K}}
+\providecommand{\Lbf}{\mathbf{L}}
+\providecommand{\Mbf}{\mathbf{M}}
+\providecommand{\Nbf}{\mathbf{N}}
+\providecommand{\Obf}{\mathbf{O}}
+\providecommand{\Pbf}{\mathbf{P}}
+\providecommand{\Qbf}{\mathbf{Q}}
+\providecommand{\Rbf}{\mathbf{R}}
+\providecommand{\Sbf}{\mathbf{S}}
+\providecommand{\Tbf}{\mathbf{T}}
+\providecommand{\Ubf}{\mathbf{U}}
+\providecommand{\Vbf}{\mathbf{V}}
+\providecommand{\Wbf}{\mathbf{W}}
+\providecommand{\Xbf}{\mathbf{X}}
+\providecommand{\Ybf}{\mathbf{Y}}
+\providecommand{\Zbf}{\mathbf{Z}}
+
+\providecommand{\bfa}{\mathbf{a}}
+\providecommand{\bfb}{\mathbf{b}}
+\providecommand{\bfc}{\mathbf{c}}
+\providecommand{\bfd}{\mathbf{d}}
+\providecommand{\bfe}{\mathbf{e}}
+\providecommand{\bff}{\mathbf{f}}
+\providecommand{\bfg}{\mathbf{g}}
+\providecommand{\bfh}{\mathbf{h}}
+\providecommand{\bfi}{\mathbf{i}}
+\providecommand{\bfj}{\mathbf{j}}
+\providecommand{\bfk}{\mathbf{k}}
+\providecommand{\bfl}{\mathbf{l}}
+\providecommand{\bfm}{\mathbf{m}}
+\providecommand{\bfn}{\mathbf{n}}
+\providecommand{\bfo}{\mathbf{o}}
+\providecommand{\bfp}{\mathbf{p}}
+\providecommand{\bfq}{\mathbf{q}}
+\providecommand{\bfr}{\mathbf{r}}
+\providecommand{\bfs}{\mathbf{s}}
+\providecommand{\bft}{\mathbf{t}}
+\providecommand{\bfu}{\mathbf{u}}
+\providecommand{\bfv}{\mathbf{v}}
+\providecommand{\bfw}{\mathbf{w}}
+\providecommand{\bfx}{\mathbf{x}}
+\providecommand{\bfy}{\mathbf{y}}
+\providecommand{\bfz}{\mathbf{z}}
+\providecommand{\bfA}{\mathbf{A}}
+\providecommand{\bfB}{\mathbf{B}}
+\providecommand{\bfC}{\mathbf{C}}
+\providecommand{\bfD}{\mathbf{D}}
+\providecommand{\bfE}{\mathbf{E}}
+\providecommand{\bfF}{\mathbf{F}}
+\providecommand{\bfG}{\mathbf{G}}
+\providecommand{\bfH}{\mathbf{H}}
+\providecommand{\bfI}{\mathbf{I}}
+\providecommand{\bfJ}{\mathbf{J}}
+\providecommand{\bfK}{\mathbf{K}}
+\providecommand{\bfL}{\mathbf{L}}
+\providecommand{\bfM}{\mathbf{M}}
+\providecommand{\bfN}{\mathbf{N}}
+\providecommand{\bfO}{\mathbf{O}}
+\providecommand{\bfP}{\mathbf{P}}
+\providecommand{\bfQ}{\mathbf{Q}}
+\providecommand{\bfR}{\mathbf{R}}
+\providecommand{\bfS}{\mathbf{S}}
+\providecommand{\bfT}{\mathbf{T}}
+\providecommand{\bfU}{\mathbf{U}}
+\providecommand{\bfV}{\mathbf{V}}
+\providecommand{\bfW}{\mathbf{W}}
+\providecommand{\bfX}{\mathbf{X}}
+\providecommand{\bfY}{\mathbf{Y}}
+\providecommand{\bfZ}{\mathbf{Z}}
+
+\providecommand{\Kmat}{\mathbf{K}}
+
+
+\providecommand{\phibf}{\mathbf{\phi}}
+\providecommand{\zhat}{\wh z}
+%% CALIGRAPHIC UPPERCASE
+\providecommand{\mcA}{\mathcal{A}}
+\providecommand{\mcB}{\mathcal{B}}
+\providecommand{\mcC}{\mathcal{C}}
+\providecommand{\mcD}{\mathcal{D}}
+\providecommand{\mcE}{\mathcal{E}}
+\providecommand{\mcF}{\mathcal{F}}
+\providecommand{\mcG}{\mathcal{G}}
+\providecommand{\mcH}{\mathcal{H}}
+\providecommand{\mcI}{\mathcal{I}}
+\providecommand{\mcJ}{\mathcal{J}}
+\providecommand{\mcK}{\mathcal{K}}
+\providecommand{\mcL}{\mathcal{L}}
+\providecommand{\mcM}{\mathcal{M}}
+\providecommand{\mcN}{\mathcal{N}}
+\providecommand{\mcO}{\mathcal{O}}
+\providecommand{\mcP}{\mathcal{P}}
+\providecommand{\mcQ}{\mathcal{Q}}
+\providecommand{\mcR}{\mathcal{R}}
+\providecommand{\mcS}{\mathcal{S}}
+\providecommand{\mcT}{\mathcal{T}}
+\providecommand{\mcU}{\mathcal{U}}
+\providecommand{\mcV}{\mathcal{V}}
+\providecommand{\mcW}{\mathcal{W}}
+\providecommand{\mcX}{\mathcal{X}}
+\providecommand{\mcY}{\mathcal{Y}}
+\providecommand{\mcZ}{\mathcal{Z}}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\newtoggle{conference}
+\togglefalse{conference} % Set to true for conference
+
+\providecommand{\ignore}[1]{}
+\makeatletter
+\providecommand{\pushright}[1]{\ifmeasuring@#1\else\omit\hfill$\displaystyle#1$\fi\ignorespaces}
+\providecommand{\pushleft}[1]{\ifmeasuring@#1\else\omit$\displaystyle#1$\hfill\fi\ignorespaces}
+\makeatother
+
+
+\providecommand{\textr}[1]{\textcolor{red}{#1}}
+\providecommand{\textg}[1]{\textcolor{green}{#1}}
+\providecommand{\textb}[1]{\textcolor{blue}{#1}}
+\providecommand{\citep}[1]{\cite{#1}}
+
+
+\providecommand{\tilde}{\widetilde}
+\providecommand{\hat}{\widehat}
+\def\del{\partial}
+\def\ds{\displaystyle}
+\def\ts{\textstyle}
+\def\beq{\begin{equation}}
+\def\eeq{\end{equation}}
+\def\beqa{\begin{eqnarray}}
+\def\eeqa{\end{eqnarray}}
+\def\beqan{\begin{eqnarray*}}
+\def\eeqan{\end{eqnarray*}}
+\def\nn{\nonumber}
+
+
+\DeclareMathOperator*{\sign}{sign}
+\DeclareMathOperator*{\binomial}{binomial}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\trace}{tr}
+\DeclareMathOperator{\vectorize}{vec}
+\DeclareMathOperator{\prox}{prox}
+\DeclareMathOperator{\Exp}{\mathbb{E}}
+\DeclareMathOperator{\Prob}{\mathbb{P}}
+
+\def\ttimes{\!\times\!} % read tight times
+\def\x{\bm{x}}
+\def\limn{\lim_{n \rightarrow \infty}}
+\def\liminfn{\liminf_{n \rightarrow \infty}}
+\def\limsupn{\limsup_{n \rightarrow \infty}}
+\def\MID{\,|\,}
+\def\MIDD{\,;\,}
+\def\msf{\mathsf}
+\providecommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+\newcommand{\minimize}[1]{~\underset{#1}{\rm minimize}~}
+\newcommand{\maximize}[1]{~\underset{#1}{\rm maximize}~}
+\renewcommand{\min}[1]{~\underset{#1}{\rm min}~}
+\renewcommand{\max}[1]{~\underset{#1}{\rm max}~}
+\newcommand{\argmin}[1]{~\underset{#1}{\rm argmin}~}
+\newcommand{\argmax}[1]{~\underset{#1}{\rm argmax}~}
+\newcommand{\subjectto}{~\text{subject to}~}
+
+\RequirePackage[noabbrev]{cleveref}
+
+\def\qed{\mbox{} \hfill $\Box$}
+
+\def\bhat{\wh{b}}
+\def\bbar{\overline{b}}
+\def\ehat{\wh{e}}
+\def\fhat{\wh{f}}
+\def\gtilde{\tilde{g}}
+\def\phat{\wh{\p}}
+\def\qhat{\wh{\q}}
+\def\rhat{\wh{\r}}
+\def\shat{\wh{\s}}
+\def\uhat{\wh{\bm{u}}}
+\def\ubar{\overline{u}}
+\def\vhat{\wh{v}}
+\def\xhat{\wh{\x}}
+\def\xbar{\overline{x}}
+\def\zhat{\widehat{\z}}
+\def\zbar{\overline{z}}
+\def\la{\leftarrow}
+\def\ra{\rightarrow}
+\def\MSE{\mbox{\small \sffamily MSE}}
+\def\SNR{\mbox{\small \sffamily SNR}}
+\def\SINR{\mbox{\small \sffamily SINR}}
+\def\arr{\rightarrow}
+\def\var{\mathrm{var}}
+\def\Cov{\mathrm{Cov}}
+\def\Tr{\mathrm{Tr}}
+\def\tr{\mathrm{trace}}
+\def\rank{\mathrm{rank}}
+\def\alphabar{\overline{\alpha}}
+\def\etabar{\overline{\eta}}
+\def\gammabar{\overline{\gamma}}
+\def\gammatil{\tilde{\gamma}}
+\newcommand\indep{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\tm{t\! - \!}
+\def\tp{t\! + \!}
+\def\km{k\! - \!}
+\def\kp{k\! + \!}
+\def\lp{\ell\! + \!}
+\def\lm{\ell\! - \!}
+\def\Lm{L\! - \!}
+\def\ip{i\! + \!}
+\def\im{i\! - \!}
+
+\def\Xset{{\cal X}}
+
+\providecommand{\zero}{\mathbf{0}}
+\providecommand{\one}{\mathbf{1}}
+\providecommand{\abf}{\mathbf{a}}
+\providecommand{\bbf}{\mathbf{b}}
+\providecommand{\cbf}{\mathbf{c}}
+\providecommand{\cbfhat}{\widehat{\mathbf{c}}}
+\providecommand{\dbf}{\mathbf{d}}
+\providecommand{\ebf}{\mathbf{e}}
+\providecommand{\fbf}{\mathbf{f}}
+\providecommand{\gbf}{\mathbf{g}}
+\providecommand{\hbf}{\mathbf{h}}
+\providecommand{\pbf}{\mathbf{p}}
+\providecommand{\pbfhat}{\widehat{\mathbf{p}}}
+\providecommand{\qbf}{\mathbf{q}}
+\providecommand{\qbfhat}{\widehat{\mathbf{q}}}
+\providecommand{\rbf}{\mathbf{r}}
+\providecommand{\rbfhat}{\widehat{\mathbf{r}}}
+\providecommand{\rbftil}{\tilde{\mathbf{r}}}
+\providecommand{\sbf}{\mathbf{s}}
+\providecommand{\sbfbar}{\overline{\mathbf{s}}}
+\providecommand{\sbfhat}{\widehat{\mathbf{s}}}
+\providecommand{\ubf}{\mathbf{u}}
+\providecommand{\ubfhat}{\widehat{\mathbf{u}}}
+\providecommand{\ubftil}{\tilde{\mathbf{u}}}
+\providecommand{\vbf}{\mathbf{v}}
+\providecommand{\vbfhat}{\widehat{\mathbf{v}}}
+\providecommand{\wbf}{\mathbf{w}}
+\providecommand{\wbfhat}{\wh{\mathbf{w}}}
+\providecommand{\xbf}{\mathbf{x}}
+\providecommand{\xbfbar}{\wb{\mathbf{x}}}
+\providecommand{\xbfhat}{\wh{\mathbf{x}}}
+\providecommand{\xbftil}{\tilde{\mathbf{x}}}
+\providecommand{\ybf}{\mathbf{y}}
+\providecommand{\ybfbar}{\overline{\mathbf{y}}}
+\providecommand{\ybftil}{\tilde{\mathbf{y}}}
+\providecommand{\zbf}{\mathbf{z}}
+\providecommand{\zbfbar}{\overline{\mathbf{z}}}
+\providecommand{\zbfhat}{\widehat{\mathbf{z}}}
+\providecommand{\Abf}{\mathbf{A}}
+\providecommand{\Bbf}{\mathbf{B}}
+\providecommand{\Bbfhat}{\wh{\mathbf{B}}}
+\providecommand{\Cbf}{\mathbf{C}}
+\providecommand{\Dbf}{\mathbf{D}}
+\providecommand{\Gbf}{\mathbf{G}}
+\providecommand{\Hbf}{\mathbf{H}}
+\providecommand{\Hbar}{\overline{H}}
+\providecommand{\Ibf}{\mathbf{I}}
+\providecommand{\Jbf}{\mathbf{J}}
+\providecommand{\Jbar}{\overline{J}}
+\providecommand{\Kbf}{\mathbf{K}}
+\providecommand{\Lbf}{\mathbf{L}}
+\providecommand{\Lbar}{\overline{L}}
+\providecommand{\Pbf}{\mathbf{P}}
+\providecommand{\Phat}{\wh{P}}
+\providecommand{\Qbf}{\mathbf{Q}}
+\providecommand{\Rbf}{\mathbf{R}}
+\providecommand{\Rhat}{\wh{R}}
+\providecommand{\Sbf}{\mathbf{S}}
+\providecommand{\Ubf}{\mathbf{U}}
+\providecommand{\Ubftil}{\tilde{\mathbf{U}}}
+\providecommand{\Ubfbar}{\overline{\mathbf{U}}}
+\providecommand{\Vbf}{\mathbf{V}}
+\providecommand{\Vbftil}{\tilde{\mathbf{V}}}
+\providecommand{\Vbfbar}{\overline{\mathbf{V}}}
+\providecommand{\Wbf}{\mathbf{W}}
+\providecommand{\Xhat}{\wh{X}}
+\providecommand{\Xbf}{\mathbf{X}}
+\providecommand{\Ybf}{\mathbf{Y}}
+\providecommand{\Zbf}{\mathbf{Z}}
+\providecommand{\Zhat}{\wh{Z}}
+\providecommand{\Zbfhat}{\wh{\mathbf{Z}}}
+\def\alphabf{{\boldsymbol \alpha}}
+\def\betabf{{\boldsymbol \beta}}
+\def\mubf{{\boldsymbol \mu}}
+\newcommand{\gammabf}{\bm{\gamma}}
+\newcommand{\kappabf}{\bm{\kappa}}
+\def\Gammabf{{\boldsymbol \Gamma}}
+\def\lambdabf{{\boldsymbol \lambda}}
+\def\lambdabar{\overline{\lambda}}
+\def\Lambdabar{\overline{\Lambda}}
+\def\Sigmabf{{\boldsymbol \Sigma}}
+\def\etabf{{\boldsymbol \eta}}
+\def\nubf{{\boldsymbol \nu}}
+\def\xibf{{\boldsymbol \xi}}
+\def\Xibf{{\boldsymbol \Xi}}
+\def\taubf{{\boldsymbol \tau}}
+\def\taubar{{\overline{\tau}}}
+\def\taubfbar{{\overline{\boldsymbol \tau}}}
+\def\taubfhat{{\wh{\boldsymbol \tau}}}
+\def\varphibf{{\boldsymbol \varphi}}
+\def\phihat{{\wh{\phi}}}
+\def\Psibf{\boldsymbol{\Psi}}
+\def\muhat{{\wh{\mu}}}
+\providecommand{\thetabar}{{\overline{\theta}}}
+\providecommand{\thetabf}{{\bm{\theta}}}
+\providecommand{\phibf}{{\bm{\phi}}}
+\providecommand{\thetahat}{{\wh{\theta}}}
+\providecommand{\mubar}{\overline{\mu}}
+\providecommand{\muavg}{\mu}
+\providecommand{\sigbf}{\bm{\sigma}}
+\providecommand{\etal}{\emph{et al.}}
+\def\Pset{{\mathcal P}}
+\providecommand{\bigCond}[2]{\bigl({#1} \!\bigm\vert\! {#2} \bigr)}
+\providecommand{\BigCond}[2]{\Bigl({#1} \!\Bigm\vert\! {#2} \Bigr)}
+\providecommand{\indic}[1]{\mathbbm{1}_{ \{ {#1} \} }}
+
+\providecommand{\MAP}{{\text{\sf map}}}
+\providecommand{\MMSE}{{\text{\sf mmse}}}
+\providecommand{\LMMSE}{{\text{\sf lmmse}}}
+\providecommand{\KL}{{\mathsf{kl}}}
+\providecommand{\opt}{_{\text{\sf opt}}}
+\providecommand{\tran}{^\top}
+\providecommand{\herm}{^{\text{\sf H}}}
+\providecommand{\fz}{f_z}
+\providecommand{\fzi}{f_{z_i}}
+\providecommand{\fx}{f_x}
+\providecommand{\fxj}{f_{x_j}}
+\providecommand{\Zz}{Z_z}
+\providecommand{\Zx}{Z_x}
+\providecommand{\ZzT}{Z_{z,T}}
+\providecommand{\ZxT}{Z_{x,T}}
+\providecommand{\defn}{:=}
+\providecommand{\const}{\text{const}}
+\def\Hmax{H_{\rm max}}
+\def\gt{\tilde{g}}
+
+\def\negSpace{\hspace{-0.15in}}
+\def\eqd{\stackrel{d}{=}}
+\def\PLeq{\stackrel{PL(2)}{=}}
+\def\Norm{{\mathcal N}}
+\def\Range{\mathrm{Range}}
+\def\alphabar{\overline{\alpha}}
+\def\xbft{\tilde{\mathbf{x}}}
+\def\zbft{\tilde{\mathbf{z}}}
+\def\Ecal{{\mathcal E}}
+\def\Kit{K_{\text{\sf it}}}
+
+\newcommand\dif{\,\mathrm{d}} % differential in integrals
+\providecommand{\Hessian}[1]{\boldsymbol{\mathcal{H}}_{#1}} % differential in integrals
+\providecommand{\vmult}{.}
+\providecommand{\vdiv}{./}
+\providecommand{\bkt}[1]{{\left< #1 \right>}}
+\providecommand{\bktAuto}[1]{{\left\langle #1 \right\rangle}} % Auto for automatically sized
+\def\Gset{\mathfrak{G}}
+\def\Gsetbar{\overline{\mathfrak{G}}}
+
+\renewcommand{\b}{\bm{b}}
+\renewcommand{\r}{\bm{r}}
+\renewcommand{\v}{\bm{v}}
+\newcommand{\C}{\bm{C}}
+\def\bigO{O}
+\newcommand{\qa}[1]{\begin{align*}#1\end{align*}}
+\newcommand{\V}{\bm{V}}
+\renewcommand{\t}{\bm{t}}
+\newcommand{\M}{\bm{M}}
+\newcommand{\K}{\bm{K}}
+
+
+\renewcommand{\k}{\bm{k}}
+\newcommand{\G}{\bm{G}}
+\renewcommand{\H}{\bm{H}}
+\newcommand{\Gammabfbar}{\wb{\Gammabf}}
+\newcommand{\Lambdabf}{\bm{\Lambda}}
+\newcommand{\Lambdabfbar}{\wb{\Lambdabf}}
+\newcommand{\Thetabf}{\bm{\Theta}}
+\newcommand{\Thetabfbar}{\wb{\Thetabf}}
+\newcommand{\Omegabf}{\bm{\Omega}}
+\newcommand{\Omegabfbar}{\wb{\Omegabf}}
+\newcommand{\Upsilonbar}{\wb{\Upsilon}}
+\newcommand{\Leven}{L_{\rm even}}
+\newcommand{\Lodd}{L_{\rm odd}}
+\newcommand{\what}{\wh{w}}
+\newcommand{\What}{\wh{W}}
+\renewcommand{\ts}{{\rm ts}}
+\renewcommand{\mp}{{\rm mp}}
+\newcommand{\psd}{\bm{\mc{S}}^+}
+\newcommand{\D}{\bm{D}}
+\renewcommand{\S}{\bm{S}}
+\newcommand{\Q}{\bm{Q}}
+\renewcommand{\P}{\bm{P}}
+\newcommand{\R}{\bm{R}}
+\renewcommand{\Z}{\bm{Z}}
+\newcommand{\B}{\bm{B}}
+
+
+%%%%% lowercase \bm %%%%%
+
+\providecommand{\a}{\bm{a}}
+\providecommand{\b}{\bm{b}}
+\providecommand{\c}{\bm{c}}
+\providecommand{\d}{\bm{d}}
+\providecommand{\e}{\bm{e}}
+\providecommand{\f}{\bm{f}}
+\providecommand{\g}{\bm{g}}
+\providecommand{\h}{\bm{h}}
+% \providecommand{\i}{\bm{i}}
+\providecommand{\j}{\bm{j}}
+\providecommand{\k}{\bm{k}}
+\providecommand{\l}{\bm{l}}
+\providecommand{\m}{\bm{m}}
+\providecommand{\n}{\bm{n}}
+\providecommand{\o}{\bm{o}}
+\providecommand{\p}{\bm{p}}
+\providecommand{\q}{\bm{q}}
+\providecommand{\r}{\bm{r}}
+\providecommand{\s}{\bm{s}}
+\providecommand{\t}{\bm{t}}
+% \providecommand{\u}{\bm{u}}
+\providecommand{\v}{\bm{v}}
+\providecommand{\w}{\bm{w}}
+\providecommand{\x}{\bm{x}}
+\providecommand{\y}{\bm{y}}
+\providecommand{\z}{\bm{z}}
+
+%%%%% Uppercase \bm %%%%%
+
+\providecommand{\A}{\bm{A}}
+\providecommand{\B}{\bm{B}}
+\providecommand{\C}{\bm{C}}
+\providecommand{\D}{\bm{D}}
+\providecommand{\E}{\bm{E}}
+\providecommand{\F}{\bm{F}}
+\providecommand{\G}{\bm{G}}
+\providecommand{\H}{\bm{H}}
+\providecommand{\I}{\bm{I}}
+\providecommand{\J}{\bm{J}}
+\providecommand{\K}{\bm{K}}
+\providecommand{\L}{\bm{L}}
+\providecommand{\M}{\bm{M}}
+\providecommand{\N}{\bm{N}}
+\providecommand{\O}{\bm{O}}
+\providecommand{\P}{\bm{P}}
+\providecommand{\Q}{\bm{Q}}
+\providecommand{\R}{\bm{R}}
+\providecommand{\S}{\bm{S}}
+\providecommand{\T}{\bm{T}}
+\providecommand{\U}{\bm{U}}
+\providecommand{\V}{\bm{V}}
+\providecommand{\W}{\bm{W}}
+\providecommand{\X}{\bm{X}}
+\providecommand{\Y}{\bm{Y}}
+\providecommand{\Z}{\bm{Z}}
+
+%%%%% lowercase \mathbf %%%%%
+
+\providecommand{\abf}{\mathbf{a}}
+\providecommand{\bbf}{\mathbf{b}}
+\providecommand{\cbf}{\mathbf{c}}
+\providecommand{\dbf}{\mathbf{d}}
+\providecommand{\ebf}{\mathbf{e}}
+\providecommand{\fbf}{\mathbf{f}}
+\providecommand{\gbf}{\mathbf{g}}
+\providecommand{\hbf}{\mathbf{h}}
+\providecommand{\ibf}{\mathbf{i}}
+\providecommand{\jbf}{\mathbf{j}}
+\providecommand{\kbf}{\mathbf{k}}
+\providecommand{\lbf}{\mathbf{l}}
+\providecommand{\mbf}{\mathbf{m}}
+\providecommand{\nbf}{\mathbf{n}}
+\providecommand{\obf}{\mathbf{o}}
+\providecommand{\pbf}{\mathbf{p}}
+\providecommand{\qbf}{\mathbf{q}}
+\providecommand{\rbf}{\mathbf{r}}
+\providecommand{\sbf}{\mathbf{s}}
+\providecommand{\tbf}{\mathbf{t}}
+\providecommand{\ubf}{\mathbf{u}}
+\providecommand{\vbf}{\mathbf{v}}
+\providecommand{\wbf}{\mathbf{w}}
+\providecommand{\xbf}{\mathbf{x}}
+\providecommand{\ybf}{\mathbf{y}}
+\providecommand{\zbf}{\mathbf{z}}
+
+%%%%% Uppercase \mathbf %%%%%
+
+\providecommand{\Abf}{\mathbf{A}}
+\providecommand{\Bbf}{\mathbf{B}}
+\providecommand{\Cbf}{\mathbf{C}}
+\providecommand{\Dbf}{\mathbf{D}}
+\providecommand{\Ebf}{\mathbf{E}}
+\providecommand{\Fbf}{\mathbf{F}}
+\providecommand{\Gbf}{\mathbf{G}}
+\providecommand{\Hbf}{\mathbf{H}}
+\providecommand{\Ibf}{\mathbf{I}}
+\providecommand{\Jbf}{\mathbf{J}}
+\providecommand{\Kbf}{\mathbf{K}}
+\providecommand{\Lbf}{\mathbf{L}}
+\providecommand{\Mbf}{\mathbf{M}}
+\providecommand{\Nbf}{\mathbf{N}}
+\providecommand{\Obf}{\mathbf{O}}
+\providecommand{\Pbf}{\mathbf{P}}
+\providecommand{\Qbf}{\mathbf{Q}}
+\providecommand{\Rbf}{\mathbf{R}}
+\providecommand{\Sbf}{\mathbf{S}}
+\providecommand{\Tbf}{\mathbf{T}}
+\providecommand{\Ubf}{\mathbf{U}}
+\providecommand{\Vbf}{\mathbf{V}}
+\providecommand{\Wbf}{\mathbf{W}}
+\providecommand{\Xbf}{\mathbf{X}}
+\providecommand{\Ybf}{\mathbf{Y}}
+\providecommand{\Zbf}{\mathbf{Z}}
+
+
+\DeclareMathOperator{\sinc}{sinc}
+
+
+%%%%%%%%%  ENVIRONMENTS  %%%%%%%%%
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\newtheorem{note}{Note}
+\newtheorem{claim}{Claim}
+\newtheorem{summary}{Summary}
+\newtheorem{acknowledgement}{Acknowledgement}
+\newtheorem{case}{Case}
+\newtheorem{conclusion}{Conclusion}
+\newtheorem{assumption}{Assumption}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{condition}{Condition}
+\newtheorem{problem}{Problem}
+\newtheorem{example}{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{property}{Property}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{conjecture}[theorem]{Conjecture}

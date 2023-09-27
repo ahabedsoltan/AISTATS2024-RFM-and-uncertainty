@@ -1,0 +1,99 @@
+\begin{tikzpicture}
+\pgfplotstableread[col sep=comma]{./data/correlation_rfmfull_rfmdiag.csv}{\datatableA};
+\pgfplotstableread[col sep=comma]{./data/correlation_rfmfull_ard.csv}{\datatableB};
+\pgfplotstableread[col sep=comma]{./data/correlation_rfmdiag_ard.csv}{\datatableC};
+\begin{axis}[
+boxplot/draw direction=y,
+title={Feature correlation},
+width=\columnwidth,
+height=0.7\columnwidth,
+boxplot={
+	%
+	% Idea: 
+	%  place the 
+	%  group 1 at 0.25 and 0.5 and 0.75
+	%  group 2 at 1.25 and 1.5 and 1.75
+	%  group 3 at 2.25 and 2.5 and 2.75
+	%  ...
+	% in a formular:
+%	draw position={0.25 + floor(\plotnumofactualtype/3) + 0.25*mod(\plotnumofactualtype,3)},
+	draw position={0.25 + floor(\plotnumofactualtype/3) + 0.25*mod(\plotnumofactualtype,3)},
+	%
+	% that means the box extend must be at most 0.2 :
+	box extend=0.2,
+},
+% ... it also means that 1 unit in x controls the width:
+%x=1.5cm,
+xtick={0,1,2,...,8},
+%xtick={0.5,1.5,2.5,3.5,4.5,5.5,6.5}
+x tick label as interval,
+xticklabels={%
+	{YaHy},%
+	{Ki},%
+	{CoCoSt},%
+	{CoCyPoPl},%
+	{EnEf},%
+	{NaPlMa},%
+	{WiQuRe},%
+},
+xticklabel style={rotate=45, anchor=east}, % Rotate labels by 45 degrees
+xmin=0,
+xmax=7,
+ymax=1.1,
+ymin=-0.75,
+legend style={font=\tiny, 
+	fill opacity=0.9, text opacity=1,
+	at={(0.02,0.02)},
+	anchor=south west,
+	row sep=0pt},
+legend cell align={left},
+area legend,
+legend entries = {
+	{RFM vs RFM-diag},
+	{RFM vs ARD-Laplace},
+	{RFM-diag vs ARD-Laplace},
+},
+]
+
+%YaHy
+\addplot[boxplot, thick, draw=darkblue] table[y index=6] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=6] {\datatableC};
+\addplot[boxplot, thick, draw=red] table[y index=6] {\datatableC};
+
+%Ki
+\addplot[boxplot, thick, draw=darkblue] table[y index=2] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=2] {\datatableB};
+\addplot[boxplot, thick, draw=red] table[y index=2] {\datatableC};
+
+% CoCoSt
+\addplot[boxplot, thick, draw=darkblue] table[y index=0] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=0] {\datatableB};
+\addplot[boxplot, thick, draw=red] table[y index=0] {\datatableC};
+
+%CoCyPoPl
+\addplot[boxplot, thick, draw=darkblue] table[y index=4] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=4] {\datatableB};
+\addplot[boxplot, thick, draw=red] table[y index=4] {\datatableC};
+
+% EnEf
+\addplot[boxplot, thick, draw=darkblue] table[y index=1] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=1] {\datatableB};
+\addplot[boxplot, thick, draw=red] table[y index=1] {\datatableC};
+
+%NaPlMa
+\addplot[boxplot, thick, draw=darkblue] table[y index=3] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=3] {\datatableB};
+\addplot[boxplot, thick, draw=red] table[y index=3] {\datatableC};
+
+%WiQuRe
+\addplot[boxplot, thick, draw=darkblue] table[y index=5] {\datatableA};
+\addplot[boxplot, thick, draw=darkgreen] table[y index=5] {\datatableB};
+\addplot[boxplot, thick, draw=red] table[y index=5] {\datatableC};
+
+
+%\addplot[color=darkblue] plot coordinates {(4,15) (10,25)};
+%\addplot[color=darkgreen] plot coordinates {(4,15) (10,25)};
+%\addplot[color=red] plot coordinates {(4,15) (10,25)};
+
+\end{axis}
+\end{tikzpicture}
